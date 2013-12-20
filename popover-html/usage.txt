@@ -1,0 +1,5 @@
+<div data-popover-html="Text: <b>I am bold indeed</b>"
+          data-popover-trigger="mouseenter"
+          data-popover-popup-delay="0"
+          data-popover-placement="bottom"
+          data-popover-append-to-body="true">Hover me, please.</div>
