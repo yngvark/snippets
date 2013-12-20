@@ -9,7 +9,7 @@ angular.module( 'custom.ui.bootstrap.popover', [ 'ui.bootstrap.tooltip' ] )
     restrict: 'EA',
     replace: true,
     scope: { title: '@', content: '@', placement: '@', animation: '&', isOpen: '&' },
-    templateUrl: 'application\\lib\\popover-html\\popover-html.html'
+    templateUrl: 'popover-html.html'
   };
 })
 .directive( 'popoverHtml', [ '$compile', '$timeout', '$parse', '$window', '$tooltip', function ( $compile, $timeout, $parse, $window, $tooltip ) {
