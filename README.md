@@ -12,4 +12,6 @@ See live example here: http://plnkr.co/edit/7O7DD094qg4wClbdBQvo?p=preview
 
 # SafeMessageFormatter: Format text _without_ throwing exceptions.
 
-Example: String formatted = SafeMessageFormatter.format("hei {0} {1}", "på", "deg"); // look ma, no exceptions!
+Example:
+
+`String formatted = SafeMessageFormatter.format("hei {0} {1}", "på", "deg"); // look ma, no exceptions!`
