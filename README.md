@@ -15,3 +15,24 @@ See live example here: http://plnkr.co/edit/7O7DD094qg4wClbdBQvo?p=preview
 Example:
 
 `String formatted = SafeMessageFormatter.format("hei {0} {1}", "på", "deg"); // look ma, no exceptions!`
+
+# Comapre each char in a string (when IntelliJ doesn't show the diff on assert failure)
+```java
+private void analyzeBytes(String lastCommentBody, String expectedBody) {
+        for (int i = 0; i < expectedBody.length(); i++) {
+            char expected = expectedBody.charAt(i);
+            char actual = lastCommentBody.charAt(i);
+
+            System.out.print(actual);
+            if (expected != actual) {
+                System.out.println("\nAssert failed.");
+                System.out.println("Expected:\t" + expected);
+                System.out.println("Actual:\t" + actual);
+                System.out.println("Expected:\t" + (byte)expected);
+                System.out.println("Actual:\t\t" + (byte)actual);
+                break;
+                //assertEquals(expected, actual);
+            }
+        }
+    }
+```
