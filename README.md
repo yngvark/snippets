@@ -16,7 +16,7 @@ Example:
 
 `String formatted = SafeMessageFormatter.format("hei {0} {1}", "på", "deg"); // look ma, no exceptions!`
 
-# Comapre each char in a string (when IntelliJ doesn't show the diff on assert failure)
+# Compare each char in a string (when IntelliJ doesn't show the diff on assert failure)
 ```java
 private void analyzeBytes(String lastCommentBody, String expectedBody) {
         for (int i = 0; i < expectedBody.length(); i++) {
