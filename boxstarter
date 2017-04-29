@@ -7,13 +7,11 @@ cinst googlechrome
 cinst vlc
 cinst 7zip
 cinst spotify
-cinst 
-cinst 
-cinst 
-cinst 
-cinst 
-
-
+cinst fsviewer
+cinst sumatrapdf
+cinst dropbox
+cinst intellijidea-ultimate
+cinst boxcryptorclassic
 
 cinst Microsoft-Hyper-V-All -source windowsFeatures
 cinst IIS-WebServerRole -source windowsfeatures
