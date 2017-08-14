@@ -11,6 +11,7 @@ cinst sumatrapdf
 cinst dropbox
 cinst intellijidea-ultimate
 cinst boxcryptorclassic
+cinst qbittorrent
 
 cinst Microsoft-Hyper-V-All -source windowsFeatures
 cinst IIS-WebServerRole -source windowsfeatures
