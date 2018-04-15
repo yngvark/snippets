@@ -17,8 +17,3 @@ cinst intellijidea-ultimate
 cinst qbittorrent
 cinst https://github.com/yngvark/snippets/blob/master/boxstarter
 cinst virtualbox
-
-
-
-cinst Microsoft-Hyper-V-All -source windowsFeatures
-cinst IIS-WebServerRole -source windowsfeatures
