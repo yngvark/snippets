@@ -1,3 +1,6 @@
+# In powershell, run:
+# Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/yngvark/snippets/master/boxstarter
+
 Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
 Enable-RemoteDesktop
 
@@ -12,6 +15,10 @@ cinst dropbox
 cinst intellijidea-ultimate
 # cinst boxcryptorclassic # Feiler, todo.
 cinst qbittorrent
+cinst https://github.com/yngvark/snippets/blob/master/boxstarter
+cinst virtualbox
+
+
 
 cinst Microsoft-Hyper-V-All -source windowsFeatures
 cinst IIS-WebServerRole -source windowsfeatures
