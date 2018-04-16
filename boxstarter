@@ -11,7 +11,7 @@ cinst vlc
 cinst 7zip
 cinst fsviewer
 cinst sumatrapdf
-cinst dropbox
+# cinst dropbox # funker ikke
 cinst intellijidea-ultimate
 # cinst boxcryptorclassic # Feiler, todo.
 cinst qbittorrent
