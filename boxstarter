@@ -10,7 +10,7 @@ cinst googlechrome
 cinst vlc
 cinst 7zip
 cinst fsviewer
-cinst sumatrapdf
+cinst sumatrapdf.install
 # cinst dropbox # funker ikke
 cinst intellijidea-ultimate
 # cinst boxcryptorclassic # Feiler, todo.
