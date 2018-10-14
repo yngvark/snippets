@@ -21,3 +21,4 @@ cinst slack
 choco install audacity
 # choco install audacity-lame # feiler
 # choco install audacity-ffmpeg # feiler
+choco install rufus
