@@ -14,7 +14,7 @@ See live example here: http://plnkr.co/edit/7O7DD094qg4wClbdBQvo?p=preview
 
 Example:
 
-`String formatted = SafeMessageFormatter.format("hei {0}", "på", "deg"); // look ma, no exceptions!`
+`String formatted = SafeMessageFormatter.format("hei {0} {1}", "der"); // look ma, no exceptions!`
 
 # Compare each char in a string (when IntelliJ doesn't show the diff on assert failure)
 ```java
