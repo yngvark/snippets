@@ -19,6 +19,5 @@ cinst https://github.com/yngvark/snippets/blob/master/boxstarter
 cinst virtualbox
 cinst slack
 choco install audacity
-# choco install audacity-lame # feiler
-# choco install audacity-ffmpeg # feiler
+choco install audacity-ffmpeg # feiler
 choco install rufus
