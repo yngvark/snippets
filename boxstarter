@@ -15,7 +15,6 @@ cinst sumatrapdf.install
 cinst intellijidea-ultimate
 # cinst boxcryptorclassic # Feiler, todo.
 cinst qbittorrent
-cinst https://github.com/yngvark/snippets/blob/master/boxstarter
 cinst virtualbox
 cinst slack
 choco install audacity
