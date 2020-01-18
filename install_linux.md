@@ -1,3 +1,4 @@
+```txt
 # lag partisjoner med gparted:
 # 550mb fat32 efi EFI
 # 1000mb ext4 boot Boot
@@ -48,7 +49,4 @@ update-initramfs -k all -c
 
 #HVIS det blir cryptsetup: WARNING: target 'nvme1n1p3_crypt' not found in /etc/crypttab
 # Så er det noe kødd med hvilken kontekst sudo kjører i. Fiks: CTRL+D, CTRL+D, sudo chroot /mnt igjen. Fiks crypttab filen hvis trengs, og kjøre update-initramfs på nytt.
-
-
-
-
+```
