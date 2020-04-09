@@ -1,31 +1,53 @@
 package com.yngvark.pc_init
 
 import java.awt.Robot
+import java.awt.Toolkit
+import java.awt.datatransfer.DataFlavor
 import java.awt.event.InputEvent
 import java.awt.event.KeyEvent
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class RobotHelper(private val robot: Robot) {
-    fun click(x: Int, y: Int) {
+    fun click(x: Int, y: Int): RobotHelper {
         robot.mouseMove(x, y)
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
+
+        return this
+    }
+
+    fun click(clicks:List<Click>, pauseInbetween:Long):RobotHelper {
+        clicks.forEach {
+            click(it)
+            println("Clicking: $it")
+            Thread.sleep(pauseInbetween)
+        }
+
+        return this
     }
 
     fun click(click:Click):RobotHelper {
         robot.mouseMove(click.x, click.y)
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
-        return this;
+
+        return this
     }
 
     private fun getKeyEventsForChar(char:Char):List<Int> {
         val specialChars = mapOf('$' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_4))
 
-        return specialChars.getOrElse(char) {
-            listOf(KeyEvent.getExtendedKeyCodeForChar(char.toInt()))
+        if (specialChars.containsKey(char)) {
+            return specialChars[char] ?: error("no such key: $char")
         }
+
+        if (char.isUpperCase()) {
+            val keyEvent:Int = KeyEvent.getExtendedKeyCodeForChar(char.toInt())
+            return listOf(KeyEvent.VK_SHIFT, keyEvent)
+        }
+
+        return listOf(KeyEvent.getExtendedKeyCodeForChar(char.toInt()))
     }
 
     fun type(text: String):RobotHelper {
@@ -38,9 +60,11 @@ class RobotHelper(private val robot: Robot) {
         return this;
     }
 
-    fun enter() {
+    fun enter(): RobotHelper {
         robot.keyPress(KeyEvent.VK_ENTER)
         robot.keyRelease(KeyEvent.VK_ENTER)
+
+        return this
     }
 
     fun run(cmd:String): String {
@@ -60,12 +84,19 @@ class RobotHelper(private val robot: Robot) {
         }
     }
 
-    fun pressAndRelease(vararg keyCodes: Int) {
+    fun pressAndRelease(vararg keyCodes: Int): RobotHelper {
         keyCodes.forEach { robot.keyPress(it) }
         keyCodes.reversed().forEach { robot.keyRelease(it) }
+
+        return this
     }
 
-    fun sleep(ms: Long) {
-        Thread.sleep(ms);
+    fun sleep(ms: Long): RobotHelper {
+        Thread.sleep(ms)
+        return this
+    }
+
+    fun getClipboardContents(): String {
+        return Toolkit.getDefaultToolkit().systemClipboard.getData(DataFlavor.stringFlavor) as String
     }
 }
