@@ -10,7 +10,7 @@ class VpnLoginProcess(private val robot: RobotHelper) {
         startConnectToVpnAndTriggerGet2faToken()
         val token = get2FaToken()
         robot.pressAndRelease(KeyEvent.VK_ALT, KeyEvent.VK_TAB).sleep(500)
-        robot.type(token).enter()
+        robot.type(token).sleep(1000).enter()
     }
 
     private fun getPinCode(): String {
@@ -23,7 +23,7 @@ class VpnLoginProcess(private val robot: RobotHelper) {
             Click(2410, 14, "Network icon")
             , Click(2322, 170)
             , Click(2173, 168)
-        ), pauseInbetween = 1000)
+        ), pauseInbetween = 300)
 
         robot.type(getPinCode()).enter()
     }
@@ -33,7 +33,7 @@ class VpnLoginProcess(private val robot: RobotHelper) {
         robot.run("/usr/bin/google-chrome-stable --disable-gpu https://messages.google.com/web/conversations")
         robot.sleep(2500)
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_J).sleep(500)
-        robot.pressAndRelease(KeyEvent.VK_TAB)
+        robot.pressAndRelease(KeyEvent.VK_TAB).sleep(100)
         robot.type("var a = $(\".snippet-text .ng-star-inserted\").innerHTML").enter().sleep(500)
         robot.type("copy(a)").enter()
 
