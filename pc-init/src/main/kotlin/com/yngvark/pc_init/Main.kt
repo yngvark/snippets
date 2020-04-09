@@ -3,13 +3,18 @@ package com.yngvark.pc_init
 import com.yngvark.pc_init.process.GmailProcess
 import com.yngvark.pc_init.process.OnePasswordProcess
 import com.yngvark.pc_init.process.VpnLoginProcess
-import com.yngvark.pc_init.process.ssh_key.OnePasswordGetter
-import com.yngvark.pc_init.process.ssh_key.SshKeysProcess
+import com.yngvark.pc_init.robot.OnePasswordGetter
+import com.yngvark.pc_init.process.SshKeysProcess
 import com.yngvark.pc_init.robot.RobotHelper
 import java.awt.Robot
-import java.awt.event.KeyEvent
 
 val robot = RobotHelper(Robot())
+val vpnLogin = VpnLoginProcess(robot)
+val onePassword = OnePasswordProcess(robot)
+val gmail = GmailProcess(robot)
+val sshKeys = SshKeysProcess(robot, OnePasswordGetter(robot))
+val onePasswordGetter = OnePasswordGetter(robot)
+
 
 fun main(args: Array<String>) {
     //loginRoutine()
@@ -17,26 +22,16 @@ fun main(args: Array<String>) {
 }
 
 fun test() {
-    val secretName = "SSH-key yngvark@gmail.com mar20 description_musing_mcnulty"
-    val secret = OnePasswordGetter(robot).getSecret("SSH-key yngvark@gmail.com mar20 description_musing_mcnulty")
-    println("Secret: $secret")
+    val sshKeys = SshKeysProcess(robot, OnePasswordGetter(robot))
+    sshKeys.run()
 }
 
 fun test2() {
-    val keyEvent:Int = KeyEvent.getExtendedKeyCodeForChar('2'.toInt())
-    println(keyEvent)
-    println(KeyEvent.VK_SHIFT)
-    //robot.pressAndRelease(KeyEvent.VK_SHIFT, KeyEvent.VK_2)@
-    //SSH-key yngvark@gmail.com mar20 description_musing_mcnulty
-    //SSH-key yngvark@gmail.com mar20 description_musing_mcnulty
-
+    val yngvarkSshKeyPw = onePasswordGetter.getSecret("SSH-key yngvark@gmail.com mar20 description_musing_mcnulty")
+    println("yngvarkSshKeyPw: $yngvarkSshKeyPw")
 }
 
 fun loginRoutine() {
-    val vpnLogin = VpnLoginProcess(robot)
-    val onePassword = OnePasswordProcess(robot)
-    val gmail = GmailProcess(robot)
-    val sshKeys = SshKeysProcess(robot, OnePasswordGetter(robot))
 
 //    ConsolePasswordReader().read().use {
 //        val pw:CharArray = it.value
