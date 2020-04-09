@@ -1,4 +1,4 @@
-package com.yngvark.pc_init
+package com.yngvark.pc_init.robot
 
 import java.awt.Robot
 import java.awt.Toolkit
@@ -17,7 +17,7 @@ class RobotHelper(private val robot: Robot) {
         return this
     }
 
-    fun click(clicks:List<Click>, pauseInbetween:Long):RobotHelper {
+    fun click(clicks:List<Click>, pauseInbetween:Long): RobotHelper {
         clicks.forEach {
             click(it)
             println("Clicking: $it")
@@ -27,7 +27,7 @@ class RobotHelper(private val robot: Robot) {
         return this
     }
 
-    fun click(click:Click):RobotHelper {
+    fun click(click: Click): RobotHelper {
         robot.mouseMove(click.x, click.y)
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
         robot.mouseRelease(InputEvent.BUTTON1_DOWN_MASK)
@@ -50,14 +50,24 @@ class RobotHelper(private val robot: Robot) {
         return listOf(KeyEvent.getExtendedKeyCodeForChar(char.toInt()))
     }
 
-    fun type(text: String):RobotHelper {
+    fun type(text: String): RobotHelper {
         text.forEach {
-            val keyEventsForChar:List<Int> = getKeyEventsForChar(it)
-            keyEventsForChar.forEach { keyEvent -> robot.keyPress(keyEvent)}
-            keyEventsForChar.reversed().forEach { keyEvent -> robot.keyRelease(keyEvent)}
+            typeChar(it)
         }
+        return this
+    }
 
-        return this;
+    fun type(text: CharArray): RobotHelper {
+        text.forEach {
+            typeChar(it)
+        }
+        return this
+    }
+
+    private fun typeChar(char:Char) {
+        val keyEventsForChar:List<Int> = getKeyEventsForChar(char)
+        keyEventsForChar.forEach { keyEvent -> robot.keyPress(keyEvent)}
+        keyEventsForChar.reversed().forEach { keyEvent -> robot.keyRelease(keyEvent)}
     }
 
     fun enter(): RobotHelper {

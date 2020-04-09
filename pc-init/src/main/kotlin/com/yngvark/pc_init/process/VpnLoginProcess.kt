@@ -1,5 +1,7 @@
-package com.yngvark.pc_init
+package com.yngvark.pc_init.process
 
+import com.yngvark.pc_init.robot.Click
+import com.yngvark.pc_init.robot.RobotHelper
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.lang.RuntimeException
