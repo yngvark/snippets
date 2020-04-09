@@ -3,12 +3,20 @@ package com.yngvark.pc_init.robot
 import java.awt.Robot
 import java.awt.Toolkit
 import java.awt.datatransfer.DataFlavor
+import java.awt.datatransfer.StringSelection
 import java.awt.event.InputEvent
 import java.awt.event.KeyEvent
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+
 class RobotHelper(private val robot: Robot) {
+    private val specialChars = mapOf(
+        '$' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_4),
+        '_' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_UNDERSCORE),
+        '@' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_2)
+    )
+
     fun click(x: Int, y: Int): RobotHelper {
         robot.mouseMove(x, y)
         robot.mousePress(InputEvent.BUTTON1_DOWN_MASK)
@@ -36,8 +44,6 @@ class RobotHelper(private val robot: Robot) {
     }
 
     private fun getKeyEventsForChar(char:Char):List<Int> {
-        val specialChars = mapOf('$' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_4))
-
         if (specialChars.containsKey(char)) {
             return specialChars[char] ?: error("no such key: $char")
         }
@@ -50,9 +56,12 @@ class RobotHelper(private val robot: Robot) {
         return listOf(KeyEvent.getExtendedKeyCodeForChar(char.toInt()))
     }
 
-    fun type(text: String): RobotHelper {
+    fun type(text: String, charPause: Long = 0): RobotHelper {
         text.forEach {
             typeChar(it)
+
+            if (charPause > 0)
+                Thread.sleep(charPause)
         }
         return this
     }
@@ -108,5 +117,11 @@ class RobotHelper(private val robot: Robot) {
 
     fun getClipboardContents(): String {
         return Toolkit.getDefaultToolkit().systemClipboard.getData(DataFlavor.stringFlavor) as String
+    }
+
+    fun clearClipboardContents() {
+        val selection = StringSelection("")
+        val clipboard = Toolkit.getDefaultToolkit().systemClipboard
+        clipboard.setContents(selection, selection)
     }
 }
