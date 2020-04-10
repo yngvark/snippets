@@ -30,4 +30,8 @@ class SomewhatSecureString(password: CharArray) : Closeable {
         clear()
     }
 
+    fun asString():String {
+        return value.joinToString("")
+    }
+
 }

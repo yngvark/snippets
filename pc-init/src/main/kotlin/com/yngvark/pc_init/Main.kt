@@ -1,51 +1,47 @@
 package com.yngvark.pc_init
 
 import com.yngvark.pc_init.process.GmailProcess
-import com.yngvark.pc_init.process.OnePasswordProcess
+import com.yngvark.pc_init.process.LoginToOnePasswordProcess
 import com.yngvark.pc_init.process.VpnLoginProcess
-import com.yngvark.pc_init.robot.OnePasswordGetter
+import com.yngvark.pc_init.robot.SecretGetter
 import com.yngvark.pc_init.process.SshKeysProcess
+import com.yngvark.pc_init.robot.ConsolePasswordReader
 import com.yngvark.pc_init.robot.RobotHelper
+import com.yngvark.pc_init.robot.SomewhatSecureString
 import java.awt.Robot
 
 val robot = RobotHelper(Robot())
-val vpnLogin = VpnLoginProcess(robot)
-val onePassword = OnePasswordProcess(robot)
-val gmail = GmailProcess(robot)
-val sshKeys = SshKeysProcess(robot, OnePasswordGetter(robot))
-val onePasswordGetter = OnePasswordGetter(robot)
 
+val loginToOnePassword = LoginToOnePasswordProcess(robot)
+val gmail = GmailProcess(robot)
+val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
+val secretGetter = SecretGetter(robot)
+val vpnLogin = VpnLoginProcess(robot, secretGetter)
 
 fun main(args: Array<String>) {
-    //loginRoutine()
-    test()
+    //robot.debugMode = true
+
+    if (args.size == 1) {
+        val password = SomewhatSecureString(args[0].toCharArray())
+        loginRoutine(password)
+        //println(secretGetter.getSecret("UVA VPN PIN"))
+    } else {
+        val password = ConsolePasswordReader().read()
+        loginRoutine(password)
+    }
+    //test()
 }
 
-fun test() {
-    val sshKeys = SshKeysProcess(robot, OnePasswordGetter(robot))
-    sshKeys.run()
-}
+fun loginRoutine(password: SomewhatSecureString) {
+    password.use {
+        loginToOnePassword.run(password)
+        vpnLogin.run()
+        //robot.pressAndRelease(KeyEvent.VK_ALT, KeyEvent.VK_TAB).sleep(50) // Switch to chrome
+        //robot.pressAndRelease(KeyEvent.VK_ESCAPE).sleep(50)
+    }
 
-fun test2() {
-    val yngvarkSshKeyPw = onePasswordGetter.getSecret("SSH-key yngvark@gmail.com mar20 description_musing_mcnulty")
-    println("yngvarkSshKeyPw: $yngvarkSshKeyPw")
-}
-
-fun loginRoutine() {
-
-//    ConsolePasswordReader().read().use {
-//        val pw:CharArray = it.value
-//
-//        vpnLogin.run()
-//        robotHelper.pressAndRelease(KeyEvent.VK_ALT, KeyEvent.VK_TAB).sleep(50) // Switch to chrome
-//        onePassword.run(pw)
-//        robotHelper.pressAndRelease(KeyEvent.VK_ESCAPE).sleep(50)
-//    }
-
-    robot.sleep(1000)
-    gmail.run()
-
-    sshKeys.run()
+    //gmail.run()
+    //sshKeys.run()
 }
 
 // TODO:
@@ -58,25 +54,11 @@ fun loginRoutine() {
 
 
 
-
-
-
-
-
-
-
-
-fun testMyRobot() {
-    //println(KeyEvent.getExtendedKeyCodeForChar('H'.toInt()))
-
-    val robot = RobotHelper(Robot())
-    robot.type("copy(a)").enter()
+fun test() {
+    sshKeys.run()
 }
 
-fun testClicks2() {
-    // Med keyboard:
-    // Start chrome
-    // Åpne https://messages.google.com/
-    // Sett i gang ~/tmp/ococ
-
+fun test2() {
+    val yngvarkSshKeyPw = secretGetter.getSecret("SSH-key yngvark@gmail.com mar20 description_musing_mcnulty")
+    println("yngvarkSshKeyPw: $yngvarkSshKeyPw")
 }

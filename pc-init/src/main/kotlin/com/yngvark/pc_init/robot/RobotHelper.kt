@@ -11,6 +11,8 @@ import java.util.concurrent.TimeUnit
 
 
 class RobotHelper(private val robot: Robot) {
+    var debugMode: Boolean = false
+
     private val specialChars = mapOf(
         '$' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_4),
         '_' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_UNDERSCORE),
@@ -25,11 +27,10 @@ class RobotHelper(private val robot: Robot) {
         return this
     }
 
-    fun click(clicks:List<Click>, pauseInbetween:Long): RobotHelper {
+    fun click(clicks:List<Click>, pauseAfterClick:Long): RobotHelper {
         clicks.forEach {
             click(it)
-            println("Clicking: $it")
-            Thread.sleep(pauseInbetween)
+            Thread.sleep(pauseAfterClick)
         }
 
         return this
@@ -66,8 +67,8 @@ class RobotHelper(private val robot: Robot) {
         return this
     }
 
-    fun type(text: CharArray): RobotHelper {
-        text.forEach {
+    fun type(text: SomewhatSecureString): RobotHelper {
+        text.value.forEach {
             typeChar(it)
         }
         return this
@@ -107,11 +108,18 @@ class RobotHelper(private val robot: Robot) {
         keyCodes.forEach { robot.keyPress(it) }
         keyCodes.reversed().forEach { robot.keyRelease(it) }
 
+        if (debugMode)
+            Thread.sleep(1000)
+
         return this
     }
 
     fun sleep(ms: Long): RobotHelper {
-        Thread.sleep(ms)
+        if (debugMode)
+            Thread.sleep(ms + 1000)
+        else
+            Thread.sleep(ms)
+
         return this
     }
 
