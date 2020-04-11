@@ -19,22 +19,33 @@ val secretGetter = SecretGetter(robot)
 val vpnLogin = VpnLoginProcess(robot, secretGetter)
 
 fun main(args: Array<String>) {
-    //robot.debugMode = true
+    decideLoginRoutine(args)
+//    test()
+}
 
+// TODO:
+// VPN
+// - ssh keys
+// chrome
+fun test() {
+    //robot.debugMode = true
+    println(vpnLogin.get2FaToken()) // TODO make private
+}
+
+
+private fun decideLoginRoutine(args: Array<String>) {
     if (args.size == 1) {
         val password = SomewhatSecureString(args[0].toCharArray())
         loginRoutine(password)
-        //println(secretGetter.getSecret("UVA VPN PIN"))
     } else {
         val password = ConsolePasswordReader().read()
         loginRoutine(password)
     }
-    //test()
 }
 
 fun loginRoutine(password: SomewhatSecureString) {
     password.use {
-        loginToOnePassword.run(password)
+        //loginToOnePassword.run(password)
         vpnLogin.run()
         //robot.pressAndRelease(KeyEvent.VK_ALT, KeyEvent.VK_TAB).sleep(50) // Switch to chrome
         //robot.pressAndRelease(KeyEvent.VK_ESCAPE).sleep(50)
@@ -44,19 +55,11 @@ fun loginRoutine(password: SomewhatSecureString) {
     //sshKeys.run()
 }
 
-// TODO:
-// VPN
-// - ssh keys
-// chrome
+
+
+
+
 // slack
-
-
-
-
-
-fun test() {
-    sshKeys.run()
-}
 
 fun test2() {
     val yngvarkSshKeyPw = secretGetter.getSecret("SSH-key yngvark@gmail.com mar20 description_musing_mcnulty")

@@ -29,18 +29,20 @@ class VpnLoginProcess(private val robot: RobotHelper, private val secretGetter: 
         robot.type(password).sleep(10).enter()
     }
 
-    private fun get2FaToken(): String {
+    fun get2FaToken(): String {
         robot.run("/usr/bin/google-chrome-stable --disable-gpu https://messages.google.com/web/conversations")
         robot.sleep(3500) // Wait for Chrome to start, AND SMS token to arrive
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_SHIFT, KeyEvent.VK_J).sleep(500) // Open Chrome Console
         //robot.pressAndRelease(KeyEvent.VK_TAB).sleep(100)
-        robot.type("var a = $(\".snippet-text .ng-star-inserted\").innerHTML").enter().sleep(500)
-        robot.type("copy(a)").enter()
+        robot.type("var a = document.evaluate(\"//span[contains(., 'Tokencode')]\", document, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent")
+        robot.pressAndRelease(KeyEvent.VK_ESCAPE).enter().sleep(1000) // Press ESC to escape chrome auto fill in
+        robot.type("copy(a)").enter().sleep(50)
 
         return parse2faTokenFromSms(robot.getClipboardContents())
     }
 
     private fun parse2faTokenFromSms(clipboardContents: String):String {
+        println("Parsing 2FA token from: $clipboardContents")
         val match = Regex("""[0-9]+""").find(clipboardContents)
             ?: throw RuntimeException("Could not find regex in clipboardContents!")
 

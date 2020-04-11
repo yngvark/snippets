@@ -16,7 +16,8 @@ class RobotHelper(private val robot: Robot) {
     private val specialChars = mapOf(
         '$' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_4),
         '_' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_UNDERSCORE),
-        '@' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_2)
+        '@' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_2),
+        '"' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE)
     )
 
     fun click(x: Int, y: Int): RobotHelper {
