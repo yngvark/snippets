@@ -1,6 +1,6 @@
 package com.yngvark.pc_init
 
-import com.yngvark.pc_init.process.GmailProcess
+import com.yngvark.pc_init.process.OutlookWebProcess
 import com.yngvark.pc_init.process.LoginToOnePasswordProcess
 import com.yngvark.pc_init.process.SshKeysProcess
 import com.yngvark.pc_init.process.VpnLoginProcess
@@ -14,7 +14,7 @@ internal class TestVariousStuff {
     val robot = RobotHelper(Robot())
 
     val loginToOnePassword = LoginToOnePasswordProcess(robot)
-    val gmail = GmailProcess(robot)
+    val outlook = OutlookWebProcess(robot)
     val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
     val secretGetter = SecretGetter(robot)
     val vpnLogin = VpnLoginProcess(robot, secretGetter)
@@ -41,6 +41,12 @@ internal class TestVariousStuff {
     @Test
     fun vpnlogin() {
         println(vpnLogin.get2FaToken())
+    }
+
+    @Test
+    fun outlook() {
+        robot.sleep(2000)
+        outlook.run()
     }
 
 

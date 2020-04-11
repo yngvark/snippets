@@ -1,6 +1,6 @@
 package com.yngvark.pc_init
 
-import com.yngvark.pc_init.process.GmailProcess
+import com.yngvark.pc_init.process.OutlookWebProcess
 import com.yngvark.pc_init.process.LoginToOnePasswordProcess
 import com.yngvark.pc_init.process.VpnLoginProcess
 import com.yngvark.pc_init.robot.SecretGetter
@@ -12,29 +12,17 @@ import java.awt.Robot
 import java.awt.event.KeyEvent
 
 val robot = RobotHelper(Robot())
-
 val loginToOnePassword = LoginToOnePasswordProcess(robot)
-
 val secretGetter = SecretGetter(robot)
 val vpnLogin = VpnLoginProcess(robot, secretGetter)
-
-val gmail = GmailProcess(robot)
+val outlookWeb = OutlookWebProcess(robot)
 val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
 
 fun main(args: Array<String>) {
+    //robot.debugMode = true
     decideLoginRoutine(args)
 //    test()
 }
-
-// TODO:
-// VPN
-// - ssh keys
-// chrome
-fun test() {
-    //robot.debugMode = true
-    println(vpnLogin.get2FaToken())
-}
-
 
 private fun decideLoginRoutine(args: Array<String>) {
     if (args.size == 1) {
@@ -46,8 +34,8 @@ private fun decideLoginRoutine(args: Array<String>) {
     }
 }
 
+
 fun loginRoutine(password: SomewhatSecureString) {
-    //robot.debugMode = true
     password.use {
         loginToOnePassword.run(password)
         vpnLogin.run()
@@ -55,17 +43,10 @@ fun loginRoutine(password: SomewhatSecureString) {
         robot.pressAndRelease(KeyEvent.VK_ESCAPE).sleep(50)
     }
 
-    gmail.run()
+    outlookWeb.run()
     sshKeys.run()
 }
 
-
-
-
-
-// slack
-
-fun test2() {
-    val yngvarkSshKeyPw = secretGetter.getSecret("SSH-key yngvark@gmail.com mar20 description_musing_mcnulty")
-    println("yngvarkSshKeyPw: $yngvarkSshKeyPw")
+fun test() {
+    println(vpnLogin.get2FaToken())
 }

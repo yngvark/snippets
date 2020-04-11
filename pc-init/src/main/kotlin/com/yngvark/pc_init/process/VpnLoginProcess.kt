@@ -23,7 +23,7 @@ class VpnLoginProcess(private val robot: RobotHelper, private val secretGetter: 
 
     private fun startConnectToVpnAndTriggerGet2faToken() {
         // Get VPN password
-        val password = secretGetter.getSecret("UVA VPN PIN")
+        val password = secretGetter.getPasswordFromNote("UVA VPN PIN")
 
         // Connect to VPN
         robot.click(listOf(
