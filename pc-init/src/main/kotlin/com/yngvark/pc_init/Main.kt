@@ -9,14 +9,17 @@ import com.yngvark.pc_init.robot.ConsolePasswordReader
 import com.yngvark.pc_init.robot.RobotHelper
 import com.yngvark.pc_init.robot.SomewhatSecureString
 import java.awt.Robot
+import java.awt.event.KeyEvent
 
 val robot = RobotHelper(Robot())
 
 val loginToOnePassword = LoginToOnePasswordProcess(robot)
-val gmail = GmailProcess(robot)
-val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
+
 val secretGetter = SecretGetter(robot)
 val vpnLogin = VpnLoginProcess(robot, secretGetter)
+
+val gmail = GmailProcess(robot)
+val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
 
 fun main(args: Array<String>) {
     decideLoginRoutine(args)
@@ -29,7 +32,7 @@ fun main(args: Array<String>) {
 // chrome
 fun test() {
     //robot.debugMode = true
-    println(vpnLogin.get2FaToken()) // TODO make private
+    println(vpnLogin.get2FaToken())
 }
 
 
@@ -44,15 +47,16 @@ private fun decideLoginRoutine(args: Array<String>) {
 }
 
 fun loginRoutine(password: SomewhatSecureString) {
+    //robot.debugMode = true
     password.use {
-        //loginToOnePassword.run(password)
+        loginToOnePassword.run(password)
         vpnLogin.run()
-        //robot.pressAndRelease(KeyEvent.VK_ALT, KeyEvent.VK_TAB).sleep(50) // Switch to chrome
-        //robot.pressAndRelease(KeyEvent.VK_ESCAPE).sleep(50)
+        robot.pressAndRelease(KeyEvent.VK_ALT, KeyEvent.VK_TAB).sleep(50) // Switch to chrome
+        robot.pressAndRelease(KeyEvent.VK_ESCAPE).sleep(50)
     }
 
-    //gmail.run()
-    //sshKeys.run()
+    gmail.run()
+    sshKeys.run()
 }
 
 

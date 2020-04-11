@@ -5,8 +5,8 @@ import java.awt.event.KeyEvent
 
 class SecretGetter(private val robot: RobotHelper) {
     fun getSecret(secretName:String):String {
-        robot.run(CHROME_COMMAND) // Open chrome
-        robot.sleep(500)
+        robot.run(CHROME_COMMAND)
+        robot.sleep(50)
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_PERIOD).sleep(500) // Open 1password
         robot.type(secretName, charPause=30)
 

@@ -1,12 +1,24 @@
 package com.yngvark.pc_init
 
+import com.yngvark.pc_init.process.GmailProcess
+import com.yngvark.pc_init.process.LoginToOnePasswordProcess
+import com.yngvark.pc_init.process.SshKeysProcess
+import com.yngvark.pc_init.process.VpnLoginProcess
 import com.yngvark.pc_init.robot.RobotHelper
+import com.yngvark.pc_init.robot.SecretGetter
 import org.junit.jupiter.api.Test
 import java.awt.Robot
 import java.awt.event.KeyEvent
 
 internal class TestVariousStuff {
-    private val robot = RobotHelper(Robot())
+    val robot = RobotHelper(Robot())
+
+    val loginToOnePassword = LoginToOnePasswordProcess(robot)
+    val gmail = GmailProcess(robot)
+    val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
+    val secretGetter = SecretGetter(robot)
+    val vpnLogin = VpnLoginProcess(robot, secretGetter)
+
 
     @Test
     fun test() {
@@ -17,7 +29,20 @@ internal class TestVariousStuff {
 
     @Test
     fun test2() {
-        robot.pressAndRelease(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE)
+        robot.pressAndRelease(KeyEvent.VK_ALT, KeyEvent.VK_TAB).sleep(1000)
         //robot.type("ø")
     }
+
+    @Test
+    fun sshkeys() {
+        sshKeys.run()
+    }
+
+    @Test
+    fun vpnlogin() {
+        println(vpnLogin.get2FaToken())
+    }
+
+
+
 }

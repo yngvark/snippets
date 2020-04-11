@@ -59,6 +59,9 @@ class RobotHelper(private val robot: Robot) {
     }
 
     fun type(text: String, charPause: Long = 0): RobotHelper {
+        if (debugMode)
+            println("Typing: $text")
+
         text.forEach {
             typeChar(it)
 
@@ -69,6 +72,9 @@ class RobotHelper(private val robot: Robot) {
     }
 
     fun type(text: SomewhatSecureString): RobotHelper {
+        if (debugMode)
+            println("Typing (secure): ${text.asString()}")
+
         text.value.forEach {
             typeChar(it)
         }
@@ -92,12 +98,11 @@ class RobotHelper(private val robot: Robot) {
         try {
             val parts = cmd.split("\\s".toRegex())
             val proc = ProcessBuilder(*parts.toTypedArray())
-                //.directory(workingDir)
                 .redirectOutput(ProcessBuilder.Redirect.INHERIT)
                 .redirectError(ProcessBuilder.Redirect.INHERIT)
                 .start()
 
-            proc.waitFor(5, TimeUnit.SECONDS)
+            proc.waitFor(1, TimeUnit.SECONDS)
             return proc.inputStream.bufferedReader().readText()
         } catch(e: IOException) {
             e.printStackTrace()
@@ -107,15 +112,15 @@ class RobotHelper(private val robot: Robot) {
 
     fun pressAndRelease(vararg keyCodes: Int): RobotHelper {
         keyCodes.forEach { robot.keyPress(it) }
+        Thread.sleep(5)
         keyCodes.reversed().forEach { robot.keyRelease(it) }
-
-        if (debugMode)
-            Thread.sleep(1000)
+        Thread.sleep(5)
 
         return this
     }
 
     fun sleep(ms: Long): RobotHelper {
+        // println("Sleeping (debug=$debugMode): $ms")
         if (debugMode)
             Thread.sleep(ms + 1000)
         else
@@ -125,7 +130,11 @@ class RobotHelper(private val robot: Robot) {
     }
 
     fun getClipboardContents(): String {
-        return Toolkit.getDefaultToolkit().systemClipboard.getData(DataFlavor.stringFlavor) as String
+        val clipboard = Toolkit.getDefaultToolkit().systemClipboard.getData(DataFlavor.stringFlavor) as String
+        if (debugMode)
+            println("Getting clipboard contents: $clipboard")
+
+        return clipboard
     }
 
     fun clearClipboardContents() {
