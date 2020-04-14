@@ -1,6 +1,6 @@
 package com.yngvark.pc_init
 
-import com.yngvark.pc_init.process.OutlookWebProcess
+import com.yngvark.pc_init.process.WebPagesProcess
 import com.yngvark.pc_init.process.LoginToOnePasswordProcess
 import com.yngvark.pc_init.process.VpnLoginProcess
 import com.yngvark.pc_init.robot.SecretGetter
@@ -15,7 +15,7 @@ val robot = RobotHelper(Robot())
 val loginToOnePassword = LoginToOnePasswordProcess(robot)
 val secretGetter = SecretGetter(robot)
 val vpnLogin = VpnLoginProcess(robot, secretGetter)
-val outlookWeb = OutlookWebProcess(robot)
+val webPagesProcess = WebPagesProcess(robot)
 val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
 
 fun main(args: Array<String>) {
@@ -43,7 +43,7 @@ fun loginRoutine(password: SomewhatSecureString) {
         robot.pressAndRelease(KeyEvent.VK_ESCAPE).sleep(50)
     }
 
-    outlookWeb.run()
+    webPagesProcess.run()
     // sshKeys.run()
 }
 
