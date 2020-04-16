@@ -25,17 +25,26 @@ fun main(args: Array<String>) {
 }
 
 private fun decideLoginRoutine(args: Array<String>) {
-    if (args.size == 1) {
-        val password = SomewhatSecureString(args[0].toCharArray())
-        loginRoutine(password)
+    if (args.any { it == "-p" }) {
+        val password = SomewhatSecureString(args[args.indexOf("-p") + 1].toCharArray())
+        loginRoutine(password, args)
     } else {
         val password = ConsolePasswordReader().read()
-        loginRoutine(password)
+        loginRoutine(password, args)
     }
 }
 
 
-fun loginRoutine(password: SomewhatSecureString) {
+fun loginRoutine(password: SomewhatSecureString, args: Array<String>) {
+    if (args.any { it == "--vpn" }) {
+        runVpnProcess(password)
+    } else {
+        println("runall")
+        runAllProcesses(password)
+    }
+}
+
+private fun runAllProcesses(password: SomewhatSecureString) {
     password.use {
         loginToOnePassword.run(password)
         vpnLogin.run()
