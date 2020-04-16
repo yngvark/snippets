@@ -12,7 +12,7 @@ val robot = RobotHelper(Robot())
 val loginToOnePassword = LoginToOnePasswordProcess(robot)
 val secretGetter = SecretGetter(robot)
 val vpnLogin = VpnLoginProcess(robot, secretGetter)
-val k8sLogin = K8sLoginProcess(robot, secretGetter)
+val k8sLogin = K8sLoginProcess(robot)
 val webPages = WebPagesProcess(robot)
 val slack = SlackProcess(robot)
 val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
@@ -51,6 +51,7 @@ private fun runAllProcesses(password: SomewhatSecureString) {
         robot.pressAndRelease(KeyEvent.VK_ESCAPE).sleep(50)
     }
 
+    k8sLogin.run()
     webPages.run()
     slack.run()
     // sshKeys.run()
