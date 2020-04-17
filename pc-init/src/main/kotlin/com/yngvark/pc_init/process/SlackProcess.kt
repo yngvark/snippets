@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent
 
 class SlackProcess(private val robot: RobotHelper) {
     fun run() {
+        println("Process: ${javaClass.simpleName}")
+
         robot.run(SLACK_COMMAND)
         robot.sleep(100)
     }

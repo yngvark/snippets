@@ -7,6 +7,8 @@ import java.awt.event.KeyEvent
 class SshKeysProcess(private val robot: RobotHelper, private val secretGetter: SecretGetter) {
 
     fun run() {
+        println("Process: ${javaClass.simpleName}")
+
         val itSshKeyPw = secretGetter.getPasswordFromNote("SSH-key yngvar.kristiansen@knowit.no")
         val yngvarkSshKeyPw = secretGetter.getPasswordFromNote("SSH-key yngvark@gmail.com mar20 description_musing_mcnulty")
 

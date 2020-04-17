@@ -1,9 +1,9 @@
 package com.yngvark.pc_init
 
 import com.yngvark.pc_init.process.*
-import com.yngvark.pc_init.robot.SecretGetter
 import com.yngvark.pc_init.robot.ConsolePasswordReader
 import com.yngvark.pc_init.robot.RobotHelper
+import com.yngvark.pc_init.robot.SecretGetter
 import com.yngvark.pc_init.robot.SomewhatSecureString
 import java.awt.Robot
 import java.awt.event.KeyEvent
@@ -18,6 +18,7 @@ val slack = SlackProcess(robot)
 val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
 
 fun main(args: Array<String>) {
+    println("Versoin 0.0.3")
     decideLoginRoutine(args)
 
 //    robot.debugMode = true
@@ -36,15 +37,24 @@ private fun decideLoginRoutine(args: Array<String>) {
 
 
 fun loginRoutine(password: SomewhatSecureString, args: Array<String>) {
-    if (args.any { it == "--vpn" }) {
-        runVpnProcess(password)
-    } else {
-        println("runall")
+    robot.sleep(2000)
+
+    if (args.isEmpty()) {
         runAllProcesses(password)
+    } else {
+        if (args.any { it == "--1p" }) {
+            runLoginToOnePasswordProcess(password)
+        }
+
+        if (args.any { it == "--vpn" }) {
+            runVpnProcess(password)
+        }
     }
 }
 
 private fun runAllProcesses(password: SomewhatSecureString) {
+    println("Running all processes")
+
     password.use {
         loginToOnePassword.run(password)
         vpnLogin.run()
@@ -56,6 +66,12 @@ private fun runAllProcesses(password: SomewhatSecureString) {
     webPages.run()
     slack.run()
     sshKeys.run() // TODO: Fix not having to do this.
+}
+
+private fun runLoginToOnePasswordProcess(password: SomewhatSecureString) {
+    password.use {
+        loginToOnePassword.run(password)
+    }
 }
 
 private fun runVpnProcess(password: SomewhatSecureString) {

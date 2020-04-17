@@ -6,6 +6,8 @@ import java.awt.event.KeyEvent
 
 class WebPagesProcess(private val robot: RobotHelper) {
     fun run() {
+        println("Process: ${javaClass.simpleName}")
+
         val password = secretGetter.getPasswordFromWebsite("Oslo Kommune AD byr281592")
 
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)

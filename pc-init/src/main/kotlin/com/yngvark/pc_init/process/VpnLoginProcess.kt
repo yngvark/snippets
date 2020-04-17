@@ -10,6 +10,8 @@ import java.lang.RuntimeException
 class VpnLoginProcess(private val robot: RobotHelper, private val secretGetter: SecretGetter) {
 
     fun run() {
+        println("Process: ${javaClass.simpleName}")
+
         startConnectToVpnAndTriggerGet2faToken()
         robot.sleep(2000) // Wait for SMS token to arrive
 
@@ -35,7 +37,6 @@ class VpnLoginProcess(private val robot: RobotHelper, private val secretGetter: 
         if (robot.debugMode)
             println("Typing 2fa password into password input box: $password")
 
-        38691932
         robot.type(password).sleep(10).enter()
     }
 

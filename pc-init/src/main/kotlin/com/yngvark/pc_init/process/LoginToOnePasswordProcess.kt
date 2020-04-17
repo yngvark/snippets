@@ -7,6 +7,7 @@ import java.awt.event.KeyEvent
 
 class LoginToOnePasswordProcess(private val robot: RobotHelper) {
     fun run(password: SomewhatSecureString) {
+        println("Process: ${javaClass.simpleName}")
         robot.run(CHROME_COMMAND)
         robot.sleep(1000)
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_PERIOD).sleep(1000) // Open 1password
