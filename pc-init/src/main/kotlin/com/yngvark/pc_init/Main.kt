@@ -18,8 +18,9 @@ val slack = SlackProcess(robot)
 val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
 
 fun main(args: Array<String>) {
-    //robot.debugMode = true
     decideLoginRoutine(args)
+
+//    robot.debugMode = true
 //    test()
 }
 
@@ -54,7 +55,7 @@ private fun runAllProcesses(password: SomewhatSecureString) {
     k8sLogin.run()
     webPages.run()
     slack.run()
-    // sshKeys.run()
+    sshKeys.run() // TODO: Fix not having to do this.
 }
 
 private fun runVpnProcess(password: SomewhatSecureString) {

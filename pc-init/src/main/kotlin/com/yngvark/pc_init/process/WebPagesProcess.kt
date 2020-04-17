@@ -19,7 +19,7 @@ class WebPagesProcess(private val robot: RobotHelper) {
 
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)
         // Super cool URL that doesn't prompt for username and password via a stupid alert box, when Outlook is stuck in that state
-        robot.type("https://webmail.oslo.kommune.no/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.oslo.kommune.no%2fowa").enter().sleep(1000)
+        robot.type("https://webmail.oslo.kommune.no/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.oslo.kommune.no%2fowa").enter().sleep(3000)
         robot.type(password).enter().sleep(300)
     }
 
