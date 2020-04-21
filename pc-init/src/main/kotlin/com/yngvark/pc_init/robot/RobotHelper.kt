@@ -95,6 +95,7 @@ class RobotHelper(private val robot: Robot) {
     }
 
     fun run(cmd:String): String {
+        println("Running: $cmd")
         try {
             val parts = cmd.split("\\s".toRegex())
             val proc = ProcessBuilder(*parts.toTypedArray())

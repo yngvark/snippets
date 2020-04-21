@@ -14,15 +14,15 @@ val secretGetter = SecretGetter(robot)
 val vpnLogin = VpnLoginProcess(robot, secretGetter)
 val k8sLogin = K8sLoginProcess(robot)
 val webPages = WebPagesProcess(robot)
-val slack = SlackProcess(robot)
 val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
+val programs = ProgramsProcess(robot)
 
 fun main(args: Array<String>) {
-    println("Versoin 0.0.3")
-    decideLoginRoutine(args)
+    println("Version 0.0.4 - Working Outlook, starting programs")
+//    decideLoginRoutine(args)
 
-//    robot.debugMode = true
-//    test()
+    robot.debugMode = true
+    test()
 }
 
 private fun decideLoginRoutine(args: Array<String>) {
@@ -64,8 +64,8 @@ private fun runAllProcesses(password: SomewhatSecureString) {
 
     k8sLogin.run()
     webPages.run()
-    slack.run()
     sshKeys.run() // TODO: Fix not having to do this.
+    programs.run()
 }
 
 private fun runLoginToOnePasswordProcess(password: SomewhatSecureString) {
@@ -81,5 +81,6 @@ private fun runVpnProcess(password: SomewhatSecureString) {
 }
 
 fun test() {
-    println(vpnLogin.get2FaToken())
+    // TODO fix outlook
+    programs.run()
 }

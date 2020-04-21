@@ -1,25 +1,8 @@
 package com.yngvark.pc_init
 
-import com.yngvark.pc_init.process.WebPagesProcess
-import com.yngvark.pc_init.process.LoginToOnePasswordProcess
-import com.yngvark.pc_init.process.SshKeysProcess
-import com.yngvark.pc_init.process.VpnLoginProcess
-import com.yngvark.pc_init.robot.RobotHelper
-import com.yngvark.pc_init.robot.SecretGetter
 import org.junit.jupiter.api.Test
-import java.awt.Robot
-import java.awt.event.KeyEvent
 
 internal class TestVariousStuff {
-    val robot = RobotHelper(Robot())
-
-    val loginToOnePassword = LoginToOnePasswordProcess(robot)
-    val outlook = WebPagesProcess(robot)
-    val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
-    val secretGetter = SecretGetter(robot)
-    val vpnLogin = VpnLoginProcess(robot, secretGetter)
-
-
     @Test
     fun test() {
         robot.type("document.evaluate(\"//span[contains(., 'Tokencode')]\", document, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent")
@@ -29,7 +12,8 @@ internal class TestVariousStuff {
 
     @Test
     fun test2() {
-        robot.pressAndRelease(KeyEvent.VK_ALT, KeyEvent.VK_TAB).sleep(1000)
+        //robot.pressAndRelease(KeyEvent.VK_WINDOWS)
+        robot.run("subl")
         //robot.type("ø")
     }
 
@@ -45,8 +29,13 @@ internal class TestVariousStuff {
 
     @Test
     fun outlook() {
-        robot.sleep(2000)
-        outlook.run()
+        robot.type("https://webmail.oslo.kommune.no/owa/auth/logon.aspx?replaceCurrent=1&url=http%3a%2f%2fwebmail.oslo.kommune.no%2fowa").enter().sleep(3000)
+        // https;//webmail.oslo.kommune.no/owa/auth/logon.aspx
+    }
+
+    @Test
+    fun programs() {
+        programs.run()
     }
 
 
