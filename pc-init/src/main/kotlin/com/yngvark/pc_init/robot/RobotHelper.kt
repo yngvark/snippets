@@ -13,11 +13,16 @@ import java.util.concurrent.TimeUnit
 class RobotHelper(private val robot: Robot) {
     var debugMode: Boolean = false
 
+    // Keyboard layout: https://en.wikipedia.org/wiki/British_and_American_keyboards#/media/File:KB_United_Kingdom.svg
     private val specialChars = mapOf(
         '$' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_4),
         '_' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_UNDERSCORE),
         '@' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_2),
-        '"' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE)
+        '"' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_QUOTE),
+        '?' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_SLASH),
+        '&' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_7),
+        '%' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_5),
+        ':' to listOfNotNull(KeyEvent.VK_SHIFT, KeyEvent.VK_COLON)
     )
 
     fun click(x: Int, y: Int): RobotHelper {
