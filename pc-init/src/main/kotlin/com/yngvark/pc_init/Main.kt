@@ -19,10 +19,10 @@ val programs = ProgramsProcess(robot)
 
 fun main(args: Array<String>) {
     println("Version 0.0.4 - Working Outlook, starting programs")
-//    decideLoginRoutine(args)
+    decideLoginRoutine(args)
 
-    robot.debugMode = true
-    test()
+//    robot.debugMode = true
+//    test()
 }
 
 private fun decideLoginRoutine(args: Array<String>) {

@@ -47,7 +47,7 @@ class VpnLoginProcess(private val robot: RobotHelper, private val secretGetter: 
         //robot.pressAndRelease(KeyEvent.VK_TAB).sleep(1000)
 
         robot.type("var a = document.evaluate(\"//span[contains(., 'Tokencode')]\", document, null, XPathResult.ANY_TYPE, null ).iterateNext().textContent")
-        robot.pressAndRelease(KeyEvent.VK_ESCAPE).enter().sleep(2000) // Press ESC to escape chrome auto fill in
+        robot.pressAndRelease(KeyEvent.VK_ESCAPE).enter().sleep(1000) // Press ESC to escape chrome auto fill in
         robot.type("copy(a)").enter().sleep(1000) // Copies variable to clipboard
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_W).sleep(50) // Close SMS web page
 
