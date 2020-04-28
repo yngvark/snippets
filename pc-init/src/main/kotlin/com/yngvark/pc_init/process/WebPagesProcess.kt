@@ -9,13 +9,16 @@ class WebPagesProcess(private val robot: RobotHelper) {
         println("Process: ${javaClass.simpleName}")
 
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)
+        robot.type("https://www.notion.so").enter()
+
+        robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)
+        robot.type("https://clockify.me/tracker").enter()
+
+        robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)
         robot.type("https://mail.google.com/mail/u/0/#inbox").enter()
 
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)
         robot.type("https://mail.google.com/mail/u/2/#inbox").enter()
-
-        robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)
-        robot.type("https://www.notion.so").enter()
 
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)
         // Super cool URL that doesn't prompt for username and password via a stupid alert box, when Outlook is stuck in that state
