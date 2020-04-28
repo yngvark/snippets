@@ -44,4 +44,10 @@ internal class TestVariousStuff {
     fun programs() {
         programs.run()
     }
+
+    @Test
+    fun clockify() {
+        robot.sleep(1000)
+        // webPages.clockify()
+    }
 }
