@@ -18,7 +18,7 @@ val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
 val programs = ProgramsProcess(robot)
 
 fun main(args: Array<String>) {
-    println("Version 0.0.4 - Working Outlook, starting programs")
+    println("Version 0.0.5 - Added clockify")
     decideLoginRoutine(args)
 
 //    robot.debugMode = true
