@@ -43,10 +43,12 @@ fun loginRoutine(password: SomewhatSecureString, args: Array<String>) {
         runAllProcesses(password)
     } else {
         if (args.any { it == "--1p" }) {
+            println("Running single step: " + LoginToOnePasswordProcess::class.simpleName)
             runLoginToOnePasswordProcess(password)
         }
 
         if (args.any { it == "--vpn" }) {
+            println("Running single step: " + VpnLoginProcess::class.simpleName)
             runVpnProcess(password)
         }
     }
@@ -62,10 +64,10 @@ private fun runAllProcesses(password: SomewhatSecureString) {
         robot.pressAndRelease(KeyEvent.VK_ESCAPE).sleep(50)
     }
 
-    k8sLogin.run()
     webPages.run()
     sshKeys.run() // TODO: Fix not having to do this.
     programs.run()
+    k8sLogin.run()
 }
 
 private fun runLoginToOnePasswordProcess(password: SomewhatSecureString) {

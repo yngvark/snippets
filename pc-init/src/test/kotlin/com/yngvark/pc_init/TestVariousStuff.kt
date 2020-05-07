@@ -41,4 +41,9 @@ internal class TestVariousStuff {
         robot.sleep(1000)
         // webPages.clockify()
     }
+
+    @Test
+    fun k8s() {
+        k8sLogin.run()
+    }
 }
