@@ -18,7 +18,19 @@ val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
 val programs = ProgramsProcess(robot)
 
 fun main(args: Array<String>) {
-    println("Version 0.0.8 - New URLs to Gmail and Outlook")
+    println("Version 0.0.9 - Show processes to be run")
+    if (args.isEmpty()) {
+        println("Running all processes")
+    } else {
+        if (run1Password(args)) {
+            println("Running step: " + LoginToOnePasswordProcess::class.simpleName)
+        }
+
+        if (runVpn(args)) {
+            println("Running step: " + VpnLoginProcess::class.simpleName)
+        }
+    }
+
     decideLoginRoutine(args)
 
 //    robot.debugMode = true
@@ -42,13 +54,13 @@ fun loginRoutine(password: SomewhatSecureString, args: Array<String>) {
     if (args.isEmpty()) {
         runAllProcesses(password)
     } else {
-        if (args.any { it == "--1p" }) {
-            println("Running single step: " + LoginToOnePasswordProcess::class.simpleName)
+        if (run1Password(args)) {
+            println("Running step: " + LoginToOnePasswordProcess::class.simpleName)
             runLoginToOnePasswordProcess(password)
         }
 
-        if (args.any { it == "--vpn" }) {
-            println("Running single step: " + VpnLoginProcess::class.simpleName)
+        if (runVpn(args)) {
+            println("Running step: " + VpnLoginProcess::class.simpleName)
             runVpnProcess(password)
         }
     }
@@ -70,11 +82,15 @@ private fun runAllProcesses(password: SomewhatSecureString) {
     k8sLogin.run()
 }
 
+private fun run1Password(args: Array<String>) = args.any { it == "--1p" }
+
 private fun runLoginToOnePasswordProcess(password: SomewhatSecureString) {
     password.use {
         loginToOnePassword.run(password)
     }
 }
+
+private fun runVpn(args: Array<String>) = args.any { it == "--vpn" }
 
 private fun runVpnProcess(password: SomewhatSecureString) {
     password.use {
