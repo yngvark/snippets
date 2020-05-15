@@ -18,7 +18,7 @@ val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
 val programs = ProgramsProcess(robot)
 
 fun main(args: Array<String>) {
-    println("Version 0.0.9 - Show processes to be run")
+    println("Version 0.0.10 - Adjust outlook URL")
     if (args.isEmpty()) {
         println("Running all processes")
     } else {
