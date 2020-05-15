@@ -9,6 +9,9 @@ class WebPagesProcess(private val robot: RobotHelper) {
         println("Process: ${javaClass.simpleName}")
 
         robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)
+        robot.type("https://knowitobjectnet.slack.com").enter()
+
+        robot.pressAndRelease(KeyEvent.VK_CONTROL, KeyEvent.VK_T).sleep(50)
         robot.type("https://www.notion.so").enter()
 
         clockify()
