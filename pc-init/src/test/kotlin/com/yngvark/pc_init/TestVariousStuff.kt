@@ -1,5 +1,6 @@
 package com.yngvark.pc_init
 
+import com.yngvark.pc_init.robot.SomewhatSecureString
 import org.junit.jupiter.api.Test
 import java.awt.event.KeyEvent
 
@@ -19,6 +20,11 @@ internal class TestVariousStuff {
     @Test
     fun sshkeys() {
         sshKeys.run()
+    }
+
+    @Test
+    fun onePassword() {
+        println(loginToOnePassword.run(SomewhatSecureString("somesecretpassword".toCharArray())))
     }
 
     @Test
