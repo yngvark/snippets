@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+labels:
+  name: {{ .Release.Name }}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        ingress: enabled
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - image: docker.io/yngvark/header-printer:latest
+          imagePullPolicy: Always
+          name: {{ .Chart.Name }}
+          ports:
+            - containerPort: {{ .Values.pod.port }}
