@@ -7,6 +7,10 @@ import com.yngvark.pc_init.robot.SecretGetter
 import com.yngvark.pc_init.robot.SomewhatSecureString
 import java.awt.Robot
 import java.awt.event.KeyEvent
+import java.io.File
+import java.lang.RuntimeException
+import java.nio.file.Paths
+import java.util.concurrent.TimeUnit
 
 val robot = RobotHelper(Robot())
 val loginToOnePassword = LoginToOnePasswordProcess(robot)
@@ -19,6 +23,7 @@ val programs = ProgramsProcess(robot)
 
 fun main(args: Array<String>) {
     println("Version 0.0.10 - Adjust outlook URL")
+
     if (args.isEmpty()) {
         println("Running all processes")
     } else {
@@ -43,8 +48,25 @@ private fun decideLoginRoutine(args: Array<String>) {
         loginRoutine(password, args)
     } else {
         val password = ConsolePasswordReader().read()
+        validatePassword(password)
         loginRoutine(password, args)
     }
+}
+
+fun validatePassword(password: SomewhatSecureString) {
+    val cmd:Array<String> = (
+            "/usr/bin/gpg --decrypt --passphrase ${password.asString()} --batch --yes " +
+            "encryptedFile.txt.gpg"
+            ).split("\\s".toRegex()).toTypedArray()
+
+    val proc = ProcessBuilder(*cmd)
+        .directory(File("./src/main/resources"))
+//        .redirectOutput(ProcessBuilder.Redirect.INHERIT)
+//        .redirectError(ProcessBuilder.Redirect.INHERIT)
+        .start()
+    proc.waitFor(2, TimeUnit.SECONDS)
+    if (proc.exitValue() > 0)
+        throw RuntimeException("Invalid password")
 }
 
 
