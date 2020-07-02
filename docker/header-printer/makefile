@@ -7,3 +7,10 @@ build-and-push:
 
 run:
 	h upgrade --install -f header-printer/values.yaml headerprinter header-printer
+
+run-test:
+	h upgrade --install -f header-printer/values-test.yaml headerprinter header-printer
+
+delete-and-run:
+	k delete deploy headerprinter
+	@make run

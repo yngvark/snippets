@@ -15,6 +15,7 @@ spec:
       labels:
         ingress: enabled
         app: {{ .Release.Name }}
+        loggingEnabled: "true"
     spec:
       containers:
         - image: docker.io/yngvark/header-printer:latest

@@ -1,6 +1,2 @@
 ingress:
   url: printheaders.k8s-test.oslo.kommune.no
-service:
-  port: 80
-pod:
-  port: 3000

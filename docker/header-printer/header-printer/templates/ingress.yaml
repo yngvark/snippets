@@ -12,6 +12,20 @@ spec:
           - backend:
               serviceName: {{ .Release.Name }}
               servicePort: {{ .Values.service.port }}
+    - host: printheaders.api-test.oslo.kommune.no
+      http:
+        paths:
+          - backend:
+              serviceName: {{ .Release.Name }}
+              servicePort: {{ .Values.service.port }}
+    - host: printheaders.api-systest.oslo.kommune.no
+      http:
+        paths:
+          - backend:
+              serviceName: {{ .Release.Name }}
+              servicePort: {{ .Values.service.port }}
   tls:
     - hosts:
         - {{ .Values.ingress.url }}
+        - printheaders.api-test.oslo.kommune.no
+        - printheaders.api-systest.oslo.kommune.no
