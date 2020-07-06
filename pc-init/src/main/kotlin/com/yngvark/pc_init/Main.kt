@@ -1,6 +1,7 @@
 package com.yngvark.pc_init
 
 import com.yngvark.pc_init.process.*
+import com.yngvark.pc_init.process.common.InvalidPasswordException
 import com.yngvark.pc_init.robot.ConsolePasswordReader
 import com.yngvark.pc_init.robot.RobotHelper
 import com.yngvark.pc_init.robot.SecretGetter
@@ -8,8 +9,6 @@ import com.yngvark.pc_init.robot.SomewhatSecureString
 import java.awt.Robot
 import java.awt.event.KeyEvent
 import java.io.File
-import java.lang.RuntimeException
-import java.nio.file.Paths
 import java.util.concurrent.TimeUnit
 
 val robot = RobotHelper(Robot())
@@ -22,7 +21,7 @@ val sshKeys = SshKeysProcess(robot, SecretGetter(robot))
 val programs = ProgramsProcess(robot)
 
 fun main(args: Array<String>) {
-    println("Version 0.0.10 - Adjust outlook URL")
+    println("Version 0.0.11 - Verify password")
 
     if (args.isEmpty()) {
         println("Running all processes")
@@ -48,7 +47,12 @@ private fun decideLoginRoutine(args: Array<String>) {
         loginRoutine(password, args)
     } else {
         val password = ConsolePasswordReader().read()
-        validatePassword(password)
+        try {
+            validatePassword(password)
+        } catch (e:InvalidPasswordException) {
+            println(e.message)
+            return
+        }
         loginRoutine(password, args)
     }
 }
@@ -56,19 +60,21 @@ private fun decideLoginRoutine(args: Array<String>) {
 fun validatePassword(password: SomewhatSecureString) {
     val cmd:Array<String> = (
             "/usr/bin/gpg --decrypt --passphrase ${password.asString()} --batch --yes " +
-            "encryptedFile.txt.gpg"
+                    getEncryptedFilename()
             ).split("\\s".toRegex()).toTypedArray()
-
     val proc = ProcessBuilder(*cmd)
-        .directory(File("./src/main/resources"))
 //        .redirectOutput(ProcessBuilder.Redirect.INHERIT)
 //        .redirectError(ProcessBuilder.Redirect.INHERIT)
         .start()
     proc.waitFor(2, TimeUnit.SECONDS)
     if (proc.exitValue() > 0)
-        throw RuntimeException("Invalid password")
+        throw InvalidPasswordException()
 }
 
+private fun getEncryptedFilename(): String {
+    val encryptedFile = File(RobotHelper::class.java.getProtectionDomain().getCodeSource().getLocation().toURI())
+    return encryptedFile.parentFile.parentFile.parentFile.toString() + "/src/main/resources/encryptedFile.txt.gpg"
+}
 
 fun loginRoutine(password: SomewhatSecureString, args: Array<String>) {
     robot.sleep(2000)
@@ -99,7 +105,7 @@ private fun runAllProcesses(password: SomewhatSecureString) {
     }
 
     webPages.run()
-    sshKeys.run() // TODO: Fix not having to do this.
+    sshKeys.run()
     programs.run()
     k8sLogin.run()
 }

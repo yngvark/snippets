@@ -1,3 +1,11 @@
+# Development
+
+To build and run:
+
+```
+./run.sh
+```
+
 # TODO
 - Logg inn i k8s. Vurder k8-dev.
 - Vær sikker på at passord ikke puttes i søkeboks eller noe teit sted! Vurder å bruk kommandolinje i stedet.
