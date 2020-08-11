@@ -1,0 +1,10 @@
+** Install chrome **
+
+** Install rclone **
+
+rclone config:
+* add remote dropbox: Bare følg defaultsettings
+
+`$ rclone copy dropbox:/linux linux --verbose`
+
+Take it from there.
