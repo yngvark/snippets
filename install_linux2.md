@@ -3,8 +3,7 @@ Inspirasjon:
 * Nr2: https://help.ubuntu.com/community/Full_Disk_Encryption_Howto_2019
 * Såvidt: https://askubuntu.com/questions/726972/dual-boot-windows-10-and-linux-ubuntu-on-separate-hard-drives
 
-
-# Installasjon av Xubuntu
+# Forberedelser: cryptsetup
 
 Lag Xubuntu USB bootable. Velg "Try Xubuntu before using" i Grub.
 
@@ -13,6 +12,9 @@ Lag partisjoner med gparted:
 * 550mb fat32 efi EFI
 * 1000mb ext4 boot Boot
 * resten ext4 rootfs Root
+
+GParted skal nå se slik ut:
+TODO BILDE GPARTED 
 
 ```bash
 sudo su
@@ -28,8 +30,7 @@ vgcreate ubuntu-vg /dev/mapper/nvme1n1p3_crypt
 lvcreate -l 100%FREE -n root ubuntu-vg
 ```
 
-GParted skal nå se slik ut:
-TODO BILDE GPARTED 
+# Installer Xubuntu
 
 Velg Something else.
 * Velg /dev/nvme1n1p2 -> Change
@@ -56,7 +57,7 @@ blkid /dev/nvme1n1p3
 
 (tips: lsblk -o name,uuid,mountpoint)
 
-## VURDER EXIT SUDO ENV, CTRL+D her, er noe rart
+Åpne ny terminal her, tror det er greit.
 
 ```bash
 sudo mount /dev/mapper/ubuntu--vg-root /mnt
@@ -83,12 +84,19 @@ rootfs UUID=<UUID_ROOTFS> none luks,discard
 
 Fjern kommentarlinjen. Resultat:
 
-```bash
+```
 rootfs UUID=062898f5-bb72-47e5-a50d-b7f521b590d4 none luks,discard
 ```
+EVT TODO nvm1n1p3_crypt UUID=062898f5-bb72-47e5-a50d-b7f521b590d4 none luks,discard
 
+Kjør så
+
+```bash
 update-initramfs -k all -c
-
+```
 
 HVIS det blir cryptsetup: WARNING: target 'nvme1n1p3_crypt' not found in /etc/crypttab
-Så er det noe kødd med hvilken kontekst sudo kjører i. Fiks: CTRL+D, CTRL+D, sudo chroot /mnt igjen. Fiks crypttab filen hvis trengs, og kjøre update-initramfs på nytt.
+* Dårlig løsning 1: Så er det noe kødd med hvilken kontekst sudo kjører i. Fiks: CTRL+D, CTRL+D, sudo chroot /mnt igjen. Fiks crypttab filen hvis trengs, og kjøre update-initramfs på nytt.
+* Mer info 2: https://unix.stackexchange.com/questions/107810/why-my-encrypted-lvm-volume-luks-device-wont-mount-at-boot-time
+
+
