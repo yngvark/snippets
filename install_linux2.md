@@ -8,13 +8,10 @@ Inspirasjon:
 Lag Xubuntu USB bootable. Velg "Try Xubuntu before using" i Grub.
 
 Lag partisjoner med gparted:
-* SIZE FILESYSTEM TYPE TYPE 
-* 550mb fat32 efi EFI
-* 1000mb ext4 boot Boot
-* resten ext4 rootfs Root
-
-GParted skal nå se slik ut:
-TODO BILDE GPARTED 
+* PARTITION SIZE FILESYSTEM KOMMENTAR 
+* /dev/nvme1n1p1 550mb fat32 Ved installasjonsveiviser: efi
+* /dev/nvme1n1p2 1000mb ext4 Ved installasjonsveiviser: boot
+* /dev/nvme1n1p3 resten ext4 Ved installasjonsveiviser: rootfs
 
 ```bash
 sudo su
@@ -44,8 +41,6 @@ Velg Something else.
   * Use as ext4 journaling system
   * Format partition
   * Mount point: /
-
-TODO BILDE
 
 # VIKTIG: Etter installasjon er ferdig, trykk Continue testing.
 Hvis ikke må du installere alt på nytt.
