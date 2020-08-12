@@ -8,3 +8,18 @@ rclone config:
 `$ rclone copy dropbox:/linux linux --verbose`
 
 Take it from there.
+
+FOLDER STRUCTURE:
+
+~/yk $ tree -d -L 3
+.
+├── app
+├── git
+├── rclone
+│   ├── dropbox
+│   │   └── linux
+│   └── enc
+│       └── path
+└── tmp
+
+20 directories
