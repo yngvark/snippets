@@ -31,7 +31,9 @@ mkdir -p ~/tmp
 cd ~/yk/rclone/dropbox
 rclone copy dropbox:/linux linux --verbose
 
-Take it from there.
+Gjør ett og ett steg i
+* _install_all.sh
+* _utvikling.sh
 
 FOLDER STRUCTURE:
 
