@@ -25,6 +25,7 @@ mkdir -p ~/yk/app
 mkdir -p ~/yk/git
 mkdir -p ~/yk/rclone/dropbox
 mkdir -p ~/yk/rclone/enc
+mkdir -p ~/yk/tmp
 mkdir -p ~/tmp
 
 cd ~/yk/rclone/dropbox
