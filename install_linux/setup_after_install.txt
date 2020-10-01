@@ -21,8 +21,14 @@ rclone config:
     * Enter secret from 1password>rclone
   * Edit advanced config? > n
   
+mkdir -p ~/yk/app
+mkdir -p ~/yk/git
+mkdir -p ~/yk/rclone/dropbox
+mkdir -p ~/yk/rclone/enc
+mkdir -p ~/tmp
 
-`$ rclone copy dropbox:/linux linux --verbose`
+cd ~/yk/rclone/dropbox
+rclone copy dropbox:/linux linux --verbose
 
 Take it from there.
 
