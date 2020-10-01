@@ -3,7 +3,24 @@
 ** Install rclone **
 
 rclone config:
-* add remote dropbox: Bare følg defaultsettings
+* add remote dropbox, navn dropbox: Bare følg defaultsettings
+* add remote crypt
+  * name> enc
+  * Storage> crypt
+  * remote> dropbox:/rclone
+  * filename_encryption>1
+    * 1=standard
+  * dirctory_name_encryption> 1
+    * 1=true
+  * Password or pass phrase for encryption> y
+    * y=Yes type in my own password
+  * password:
+    * Enter secret from 1password>rclone
+  * Password or pass phrase for salt > y
+    * y=Yes type in my own password
+    * Enter secret from 1password>rclone
+  * Edit advanced config? > n
+  
 
 `$ rclone copy dropbox:/linux linux --verbose`
 
