@@ -1,0 +1,22 @@
+# In powershell, run:
+# Install-BoxstarterPackage -PackageName https://raw.githubusercontent.com/yngvark/snippets/master/boxstarter
+
+Set-WindowsExplorerOptions -EnableShowHiddenFilesFoldersDrives -EnableShowProtectedOSFiles -EnableShowFileExtensions
+Enable-RemoteDesktop
+
+cinst totalcommander
+cinst sublimetext3
+cinst googlechrome
+cinst vlc
+cinst 7zip
+cinst fsviewer
+cinst sumatrapdf.install
+# cinst dropbox # funker ikke
+cinst intellijidea-ultimate
+# cinst boxcryptorclassic # Feiler, todo.
+cinst qbittorrent
+cinst virtualbox
+cinst slack
+choco install audacity
+choco install audacity-ffmpeg # feiler
+choco install rufus
