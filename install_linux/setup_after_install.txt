@@ -1,5 +1,8 @@
 ** Install chrome **
 
+** Install Dropbox ** (fra nettsiden)
+Sett lokasjon til: ~/yk/Dropbox
+
 ** Install rclone **
 
 rclone config:
@@ -23,7 +26,6 @@ rclone config:
   
 mkdir -p ~/yk/app
 mkdir -p ~/yk/git
-mkdir -p ~/yk/rclone/dropbox
 mkdir -p ~/yk/rclone/enc
 mkdir -p ~/yk/tmp
 mkdir -p ~/tmp
@@ -42,7 +44,7 @@ FOLDER STRUCTURE:
 ├── app
 ├── git
 ├── rclone
-│   ├── dropbox
+│   ├── Dropbox
 │   │   └── linux
 │   └── enc
 │       └── path
